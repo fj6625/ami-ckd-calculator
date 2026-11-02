@@ -142,10 +142,13 @@ if st.button("Calculate 28-day mortality risk and generate explanation"):
     st.markdown("**SHAP Waterfall Plot**")
     st.markdown("*Starting from the baseline risk, the contribution magnitude of each feature is shown layer by layer. Red pushes the risk up, blue lowers it.*")
 
-    # 由于是全宽布局，调整 figsize 使瀑布图居中且不显得过于宽大
-    fig, ax = plt.subplots(figsize=(10, 6))
+    # 绘制瀑布图后调整 figure 尺寸，使其缩小显示
+    plt.figure(figsize=(10, 6))
     shap.plots.waterfall(explanation, max_display=10, show=False)
-    st.pyplot(fig)
+    fig = plt.gcf()
+    # 缩小瀑布图尺寸
+    fig.set_size_inches(7, 4.2)
+    st.pyplot(fig, use_container_width=False)
     plt.close(fig)
 
     st.caption("This tool is for research assistance only and does not replace clinical decision-making.")
